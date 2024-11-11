@@ -1,3 +1,4 @@
+import path from "path";
 import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
@@ -7,10 +8,13 @@ import messageRoutes from "./routes/message.routes.js";
 import userRoutes from './routes/user.routes.js';
 
 import connectToMongoDB from "./db/connectToMongoDB.js";
+import { app, server } from "./socket/socket.js";
 
 // Initialize express application
-const app = express();
+
 const PORT = process.env.PORT || 5000;
+
+const __dirname =  path.resolve();
 
 // Load environment variables from .env file
 dotenv.config();
@@ -27,6 +31,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/users", userRoutes);
 
+app.use(express.static(path.join(__dirname, "/frontend/dist")));
+
 
 // // Define a route handler for the default home page
 // app.get("/", (req, res) => {
@@ -41,7 +47,7 @@ app.use("/api/users", userRoutes);
 */
 
 // Start the server and listen on the specified port
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     connectToMongoDB();
     console.log(`Server is running on PORT: ${PORT}`)
 
