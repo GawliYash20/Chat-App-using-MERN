@@ -33,12 +33,11 @@ app.use("/api/users", userRoutes);
 
 app.use(express.static(path.join(__dirname, "/frontend/dist")));
 
+app.get("*", (req, res) => {
+        res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"))
+})
 
-// // Define a route handler for the default home page
-// app.get("/", (req, res) => {
-//     // Root route http://localhost:5000/
-//     res.send("Hello world!!");
-// });
+
 
 
 
