@@ -6,7 +6,7 @@ export const SocketContext = createContext();
 
 
 export const useSocketContext = () => {
-    return useContext(SocketContext);
+  return useContext(SocketContext);
 }
 
 
@@ -17,26 +17,27 @@ export const SocketContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (authUser) {
-      const socket = io("https://chat-app-using-mern-5eez.onrender.com", {
-        query: {
-            userId: authUser._id
-        }
+      const socket = io("http://localhost:5000", {
+        query: { userId: authUser._id },
+        withCredentials: true,
       });
-
       setSocket(socket);
 
       socket.on("getOnlineUsers", (users) => {
         setOnlineUsers(users);
-      })
+      });
 
-      return () => socket.close();
+      return () => {
+        socket.off("getOnlineUsers"); // Clean up listeners
+        socket.close(); // Close the socket connection when authUser changes or component unmounts
+      };
     } else {
       if (socket) {
-        socket.close();
+        socket.close(); // Close the socket when the user logs out
         setSocket(null);
       }
     }
-  }, [authUser]);
+  }, [authUser]); // Re-run the effect whenever authUser changes
 
   return (
     <SocketContext.Provider value={{ socket, onlineUsers }}>

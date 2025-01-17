@@ -1,0 +1,53 @@
+{
+    "user": [
+        {
+            "username": "Gateway",
+            "fullName": "Gateway",
+            "password": "67896789",
+            "confirmPassword": "67896789",
+            "gender": "male"
+        },
+        {
+            "username": "rajat",
+            "fullName": "Rajat",
+            "password": "67896789",
+            "confirmPassword": "67896789",
+            "gender": "male"
+        },
+        {
+            "username": "mahesh",
+            "fullName": "Mahesh",
+            "password": "67896789",
+            "confirmPassword": "67896789",
+            "gender": "male"
+        },
+        {
+            "username": "omkar",
+            "fullName": "Omkar",
+            "password": "67896789",
+            "confirmPassword": "67896789",
+            "gender": "male"
+        },
+        {
+            "username": "adesh",
+            "fullName": "Adesh",
+            "password": "67896789",
+            "confirmPassword": "67896789",
+            "gender": "male"
+        },
+        {
+            "username": "Superadmin",
+            "fullName": "Superadmin",
+            "password": "67896789",
+            "confirmPassword": "67896789",
+            "gender": "male"
+        },
+        {
+            "username": "sysadmin",
+            "fullName": "SysAdmin",
+            "password": "67896789",
+            "confirmPassword": "67896789",
+            "gender": "male"
+        }
+    ]
+}
