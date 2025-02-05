@@ -25,6 +25,7 @@ export const AnswerVideoCalling = ({ callStatus, updateCallStatus, localStream, 
   const remoteVideoRef = useRef(null); //this is a React ref to a dom element, so we can interact with it the React
   const localVideoRef = useRef(null); //this is a React ref to a dom element, so we can interact with it the React
   const [answerCreated, setAnswerCreated] = useState(false);
+  const [videoStyles, setVideoStyles] = useState({});
 
 
   // Dynamically adjust video container size
