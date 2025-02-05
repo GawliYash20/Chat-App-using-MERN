@@ -17,7 +17,7 @@ export const SocketContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (authUser) {
-      const socket = io("http://localhost:5000", {
+      const socket = io("/", { // insert url: "/" if backend serving the static files(frontend)
         query: { userId: authUser._id },
         withCredentials: true,
       });

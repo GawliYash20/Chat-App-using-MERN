@@ -17,11 +17,12 @@
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express": "^4.21.1",
+    "express": "^4.21.2",
     "https": "^1.0.0",
     "jsonwebtoken": "^9.0.2",
     "mkcert": "^3.2.0",
     "mongoose": "^8.8.0",
+    "nodemon": "^3.1.9",
     "socket.io": "^4.8.1",
     "zustand": "^5.0.1"
   }
