@@ -6,11 +6,11 @@ import fs from "fs";
 
 const app = express();
 
-const key = fs.readFileSync("cert.key");
-const cert = fs.readFileSync("cert.crt");
+// const key = fs.readFileSync("cert.key");
+// const cert = fs.readFileSync("cert.crt");
 
-const server = https.createServer({ key, cert }, app);
-// const server = http.createServer(app);
+// const server = https.createServer({ key, cert }, app);
+const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
