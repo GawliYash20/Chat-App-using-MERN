@@ -6,6 +6,7 @@ import clientSocketListeners from "./webRtcUtilites/clientSocketListeners";
 import createPeerConnection from "./webRtcUtilites/createPeerConn";
 import { useSocketContext } from "../../context/SocketContext";
 import { useAuthContext } from "../../context/AuthContext";
+import ToggleAudio from "./actionButtons/ToggleAudio";
 
 export const VideoCalling = ({
   callStatus,
@@ -20,37 +21,15 @@ export const VideoCalling = ({
   setTypeOfCall,
 }) => {
   const [offerCreated, setOfferCreated] = useState(false);
-  const [videoStyles, setVideoStyles] = useState({});
-  const [videoInput, setVideoInput] = useState();
-  const { onlineUsers, socket } = useSocketContext();
+
+
+  const { socket } = useSocketContext();
   const { authUser } = useAuthContext();
   const navigate = useNavigate();
 
   const localVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
 
-  // Dynamically adjust video container size
-  useEffect(() => {
-    const adjustVideoSize = (videoRef) => {
-      if (videoRef.current) {
-        const video = videoRef.current;
-        video.addEventListener("loadedmetadata", () => {
-          const { videoWidth, videoHeight } = video;
-          const aspectRatio = videoWidth / videoHeight;
-
-          setVideoStyles(aspectRatio > 1 ? { width: "100%", height: "auto" } : { width: "auto", height: "100%" });
-        });
-      }
-    };
-
-    adjustVideoSize(remoteVideoRef);
-    adjustVideoSize(localVideoRef);
-
-    return () => {
-      if (remoteVideoRef.current) remoteVideoRef.current.removeEventListener("loadedmetadata", adjustVideoSize);
-      if (localVideoRef.current) localVideoRef.current.removeEventListener("loadedmetadata", adjustVideoSize);
-    };
-  }, [remoteVideoRef, localVideoRef]);
 
   // Initialize streams in video elements
   useEffect(() => {
@@ -138,21 +117,31 @@ export const VideoCalling = ({
           className="absolute bottom-4 left-4 w-32 h-32 object-cover border-4 border-white rounded-lg shadow-md transform scale-x-[-1]"
           autoPlay
           playsInline
+          muted
         ></video>
       </div>
 
       {/* Controls */}
       <div className="sticky bottom-0 flex justify-center items-center gap-4 p-4 bg-base-200 backdrop-blur-lg rounded-b-lg z-10">
-        <button className="btn btn-primary btn-circle shadow-md">
+        <div className="btn btn-primary btn-circle shadow-md">
           <ToggleButton
             localStream={localStream}
-            videoInput={videoInput}
-            setVideoInput={setVideoInput}
+            callStatus={callStatus}
+            updateCallStatus={updateCallStatus}
           />
-        </button>
-        <button className="btn btn-error btn-circle shadow-md">
+        </div>
+        <div className="btn btn-error btn-circle shadow-md">
           <HangUp handleHangUp={hangUp} />
-        </button>
+        </div>
+        <div className="btn btn-primary btn-circle shadow-md">
+          <ToggleAudio
+
+            localStream={localStream}
+
+            callStatus={callStatus}
+            updateCallStatus={updateCallStatus}
+          />
+        </div>
       </div>
     </div>
   );

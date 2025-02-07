@@ -15,6 +15,8 @@ const MessageContainer = ({callStatus, updateCallStatus, localStream, setLocalSt
   const { onlineUsers, socket } = useSocketContext();
   
   const isOnline = selectedConversation && onlineUsers.includes(selectedConversation._id);
+  // console.log("isOnline:", isOnline);
+  // console.log("Online Users", onlineUsers);
   const navigate = useNavigate();
 
   // State variable
@@ -42,23 +44,16 @@ const MessageContainer = ({callStatus, updateCallStatus, localStream, setLocalSt
   }
 
   const answer = (offer) => {
+    console.log("Answering offer:", offer);
     const res = true;
     initCall('answer', res)
     // Navigate to the AnswerVideoCalling component with the offer state
     // navigate(`/answerVideo`);
-    setOfferData(offer[0])
+    setOfferData(offer)
   }
 
 
 
-
-
-  // Define the function to answer the video call offer
-  const answerOffer = (offer) => {
-    console.log("Answering offer:", offer);
-    answer(offer)
-    
-  };
 
 
 
@@ -86,6 +81,8 @@ const MessageContainer = ({callStatus, updateCallStatus, localStream, setLocalSt
     const handleNewOffer = (offer) => {
       
       // setOffers((prev) => [...prev, offer]);
+      console.log("New offer received:", offer);
+      let newOffer = offer[offer.length - 1]; 
       
     
       // Use offerer information directly from the offer object
@@ -100,13 +97,13 @@ const MessageContainer = ({callStatus, updateCallStatus, localStream, setLocalSt
                 {/* Display offerer's profile pic */}
                 <img
                   className="h-10 w-10 rounded-full"
-                  src={offer[0].offererProfilePic} // fallback image
+                  src={newOffer.offererProfilePic} // fallback image
                   alt="Offerer Avatar"
                 />
               </div>
               <div className="ml-3 flex-1">
                 <p className="text-sm font-medium text-gray-900">
-                  {offer[0].offererFullName}
+                  {newOffer.offererFullName}
                 </p>
                 <p className="mt-1 text-sm text-gray-500">
                   Incoming video call.
@@ -118,7 +115,7 @@ const MessageContainer = ({callStatus, updateCallStatus, localStream, setLocalSt
             <button
               onClick={() => {
                 toast.dismiss(t.id);
-                answerOffer(offer);
+                answer(newOffer);
               }}
               className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >

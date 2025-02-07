@@ -8,6 +8,7 @@ import { useAuthContext } from "../../context/AuthContext";
 import { useSocketContext } from "../../context/SocketContext";
 import createPeerConnection from "./webRtcUtilites/createPeerConn";
 import clientSocketListeners from "./webRtcUtilites/clientSocketListeners";
+import ToggleAudio from "./actionButtons/ToggleAudio";
 
 
 
@@ -21,35 +22,11 @@ export const AnswerVideoCalling = ({ callStatus, updateCallStatus, localStream, 
   const { authUser } = useAuthContext();
   const { socket } = useSocketContext();
 
-  const [videoInput, setVideoInput] = useState(false);
+
   const remoteVideoRef = useRef(null); //this is a React ref to a dom element, so we can interact with it the React
   const localVideoRef = useRef(null); //this is a React ref to a dom element, so we can interact with it the React
   const [answerCreated, setAnswerCreated] = useState(false);
-  const [videoStyles, setVideoStyles] = useState({});
 
-
-  // Dynamically adjust video container size
-  useEffect(() => {
-    const adjustVideoSize = (videoRef) => {
-      if (videoRef.current) {
-        const video = videoRef.current;
-        video.addEventListener("loadedmetadata", () => {
-          const { videoWidth, videoHeight } = video;
-          const aspectRatio = videoWidth / videoHeight;
-
-          setVideoStyles(aspectRatio > 1 ? { width: "100%", height: "auto" } : { width: "auto", height: "100%" });
-        });
-      }
-    };
-
-    adjustVideoSize(remoteVideoRef);
-    adjustVideoSize(localVideoRef);
-
-    return () => {
-      if (remoteVideoRef.current) remoteVideoRef.current.removeEventListener("loadedmetadata", adjustVideoSize);
-      if (localVideoRef.current) localVideoRef.current.removeEventListener("loadedmetadata", adjustVideoSize);
-    };
-  }, [remoteVideoRef, localVideoRef]);
 
 
   useEffect(() => {
@@ -104,6 +81,7 @@ export const AnswerVideoCalling = ({ callStatus, updateCallStatus, localStream, 
       try {
         console.log(peerConnection);
         console.log(offerData);
+        console.log("AnswerVideoCalling answering:", offerData);
         await peerConnection.setRemoteDescription(offerData.offer);
         console.log("Creating Answer....");
         const answer = await peerConnection.createAnswer();
@@ -165,21 +143,31 @@ export const AnswerVideoCalling = ({ callStatus, updateCallStatus, localStream, 
           className="absolute bottom-4 left-4 w-32 h-32 object-cover border-4 border-white rounded-lg shadow-md transform scale-x-[-1]"
           autoPlay
           playsInline
+          muted
         ></video>
       </div>
 
       {/* Controls */}
       <div className="sticky bottom-0 flex justify-center items-center gap-4 p-4 bg-base-200 backdrop-blur-lg rounded-b-lg z-10">
-        <button className="btn btn-primary btn-circle shadow-md">
+        <div className="btn btn-primary btn-circle shadow-md">
           <ToggleButton
             localStream={localStream}
-            videoInput={videoInput}
-            setVideoInput={setVideoInput}
+
+            callStatus={callStatus}
+            updateCallStatus={updateCallStatus}
           />
-        </button>
-        <button className="btn btn-error btn-circle shadow-md">
+        </div>
+        <div className="btn btn-error btn-circle shadow-md">
           <HangUp handleHangUp={hangUp} />
-        </button>
+        </div>
+        <div className="btn btn-primary btn-circle shadow-md">
+          <ToggleAudio 
+            localStream={localStream}
+            callStatus={callStatus}
+
+            updateCallStatus={updateCallStatus}
+          />
+        </div>
       </div>
     </div>
   );

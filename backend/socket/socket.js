@@ -1,8 +1,8 @@
 import { Server } from "socket.io";
 import http from "http";
-import https from "https";
+// import https from "https";
 import express from "express";
-import fs from "fs";
+// import fs from "fs";
 
 const app = express();
 
@@ -83,6 +83,7 @@ io.on("connection", (socket) => {
     // console.log(offers)
 
     // send out to all connected sockets except caller
+    console.log("newOfferAwaiting", offers.slice(-1));
     socket.broadcast.emit("newOfferAwaiting", offers.slice(-1));
   });
 
