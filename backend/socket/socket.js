@@ -1,21 +1,21 @@
 import { Server } from "socket.io";
-import http from "http";
-// import https from "https";
+// import http from "http";
+import https from "https";
 import express from "express";
-// import fs from "fs";
+import fs from "fs";
 
 const app = express();
 
-// const key = fs.readFileSync("cert.key");
-// const cert = fs.readFileSync("cert.crt");
+const key = fs.readFileSync("cert.key");
+const cert = fs.readFileSync("cert.crt");
 
-// const server = https.createServer({ key, cert }, app);
-const server = http.createServer(app);
+const server = https.createServer({ key, cert }, app);
+// const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    // origin: ["https://localhost:3000", "https://192.168.1.32:3000"],
-    origin: ["https://chat-app-using-mern-5eez.onrender.com"],
+    origin: ["https://localhost:3000", "https://192.168.1.32:3000"],
+    // origin: ["https://chat-app-using-mern-5eez.onrender.com"],
     methods: ["GET", "POST"],
     credentials: true,
   },

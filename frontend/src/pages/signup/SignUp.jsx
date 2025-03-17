@@ -28,14 +28,14 @@ const SignUp = () => {
 		<div className='flex flex-col items-center justify-center min-w-96 mx-auto'>
 			<div className='w-full p-6 rounded-lg shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0'>
 				<h1 className='text-3xl font-semibold text-center text-gray-300'>
-					<span className='text-blue-500'>NeoRad </span>
+					<span className='text-blue-500'>ChatApp </span>
 					Sign Up 
 				</h1>
 
 				<form onSubmit={handleSubmit}>
 					<div>
 						<label className='label p-2'>
-							<span className='text-base label-text'>Full Name</span>
+							<span className='text-base label-text text-gray-400'>Full Name</span>
 						</label>
 						<input
 							type='text'
@@ -48,7 +48,7 @@ const SignUp = () => {
 
 					<div>
 						<label className='label p-2 '>
-							<span className='text-base label-text'>Username</span>
+							<span className='text-base label-text text-gray-400'>Username</span>
 						</label>
 						<input
 							type='text'
@@ -61,7 +61,7 @@ const SignUp = () => {
 
 					<div>
 						<label className='label'>
-							<span className='text-base label-text'>Password</span>
+							<span className='text-base label-text text-gray-400'>Password</span>
 						</label>
 						<input
 							type='password'
@@ -74,7 +74,7 @@ const SignUp = () => {
 
 					<div>
 						<label className='label'>
-							<span className='text-base label-text'>Confirm Password</span>
+							<span className='text-base label-text text-gray-400'>Confirm Password</span>
 						</label>
 						<input
 							type='password'
@@ -89,14 +89,14 @@ const SignUp = () => {
 
 					<Link
 						to={"/login"}
-						className='text-sm hover:text-blue-600 no-underline mt-2 inline-block'
+						className='text-sm text-gray-400 hover:text-blue-600 no-underline mt-2 inline-block'
 						href='#'
 					>
 						Already have an account?
 					</Link>
 
 					<div>
-						<button className='btn btn-block btn-sm mt-2 border hover:bg-sky-950 border-slate-700' disabled={loading}>
+						<button className='btn btn-block btn-sm mt-2 border hover:bg-sky-950  border-slate-700' disabled={loading}>
 							{loading ? <span className='loading loading-spinner'></span> : "Sign Up"}
 						</button>
 					</div>
